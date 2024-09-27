@@ -10,10 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Rota de pesquisa
 Route::get('/pesquisa', [JobController::class, 'pesquisa'])->name('pesquisa');
-
-// Rota do dashboard que chama a pesquisa automaticamente
 Route::get('/dashboard', [JobController::class, 'pesquisa'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
