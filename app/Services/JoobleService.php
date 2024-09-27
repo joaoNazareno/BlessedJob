@@ -19,7 +19,7 @@ class JoobleService
 
         $response = Http::post($url, [
             'keywords' => $params['title'] ?? '',
-            'location' => $params['location'] ?? '', // Você pode remover o parâmetro de localização se desejar simplificar.
+            'location' => $params['location'] ?? '', 
         ]);
 
         if ($response->successful()) {
