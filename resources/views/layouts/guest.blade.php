@@ -38,19 +38,26 @@
             width: 768px;
             max-width: 100%;
             min-height: 480px;
-            border-top-left-radius: 11rem;
-            border-bottom-right-radius: 11rem;
         }
 
         .container p {
+            color: #e2e2e2;
             font-size: 14px;
             line-height: 20px;
             letter-spacing: 0.3px;
             margin: 20px 0;
         }
 
-        .container span {
-            font-size: 12px;
+        .container h2 {
+            font-size: 40px;
+            color: #fcfcfc;
+            font-weight: bold
+        }
+
+        .container h1 {
+            font-size: 30px;
+            font-weight: bold;
+            padding: 10px;
         }
 
         .container a {
@@ -61,7 +68,7 @@
         }
 
         .container button {
-            background-color: #512da8;
+            background-color: #3b61dd;
             color: #fff;
             font-size: 12px;
             padding: 10px 45px;
@@ -99,6 +106,12 @@
             width: 100%;
             outline: none;
         }
+
+        .container button.hidden {
+            background-color: transparent;
+            border-color: #fff;
+        }
+
 
         .form-container {
             position: absolute;
@@ -179,20 +192,32 @@
         }
 
         .toggle {
-            height: 100%;
-
-            color: #fff;
-            position: relative;
-            left: -100%;
-            height: 100%;
+            position: absolute;
             width: 200%;
-            transform: translateX(0);
+            height: 100%;
+            left: -100%;
             transition: all 0.6s ease-in-out;
+            border-radius: 150px 0 0 100px;
+            overflow: hidden;
         }
 
         .container.active .toggle {
             transform: translateX(50%);
+            border-radius: 0 150px 100px 0;
         }
+
+        .toggle video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 150px 0 0 100px;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .container.active .toggle video {
+            border-radius: 0 150px 100px 0;
+        }
+
 
         .toggle-panel {
             position: absolute;
@@ -225,67 +250,55 @@
         .container.active .toggle-right {
             transform: translateX(200%);
         }
-
-        .video-section {
-            position: absolute;
-            border-top-left-radius: 11rem;
-            border-bottom-right-radius: 11rem;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .video-section video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
     </style>
 </head>
 
 <body>
     <div class="container" id="container">
-        <div class="video-section" id="videoSection">
-            <video src="{{ asset('img/ceu_blessedjob.mp4') }}" autoplay loop muted></video>
-        </div>
-
         <div class="form-container sign-up">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <h1>Criar Conta</h1>
-                <span>ou use seu e-mail para registro</span>
-                <input type="text" name="name" placeholder="Nome" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Senha" required>
-                <button type="submit">Registrar</button>
+                <x-text-input id="name" placeholder="Nome" class="block mt-1 w-full" type="text" name="name"
+                    :value="old('name')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                <x-text-input id="email" placeholder="Email" class="block mt-1 w-full" type="email" name="email"
+                    :value="old('email')" required autocomplete="username" />
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <x-text-input id="password" placeholder="Senha" class="block mt-1 w-full" type="password"
+                    name="password" required autocomplete="new-password" />
+
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <x-text-input id="password_confirmation" placeholder="Confirma Senha" class="block mt-1 w-full"
+                    type="password" name="password_confirmation" required autocomplete="new-password" />
+
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                <x-primary-button class="ms-4">
+                    {{ __('Registrar') }}
+                </x-primary-button>
             </form>
         </div>
         <div class="form-container sign-in">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <h1>Entrar</h1>
-                <span>ou use sua senha de e-mail</span>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Senha" required>
-                <a href="#">Esqueceu sua senha?</a>
                 <button type="submit">Entrar</button>
             </form>
         </div>
-
         <div class="toggle-container">
             <div class="toggle">
+                <video src="{{ asset('img/ceu_blessedjob.mp4') }}" autoplay loop muted></video>
                 <div class="toggle-panel toggle-left">
-                    <h1>Bem-vindo de volta!</h1>
-                    <span>Para continuar, faça login em sua conta</span>
-                    <button id="login">Entrar</button>
+                    <h2>Bem-vindo de volta!</h2>
+                    <p>Para continuar, faça login em sua conta</p>
+                    <button class="hidden" id="login">Entrar</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <h1>Olá, amigo!</h1>
-                    <span>Crie uma conta para começar</span>
-                    <button id="register">Registrar</button>
+                    <h2>Olá, amigo!</h2>
+                    <p>Crie uma conta para começar</p>
+                    <button class="hidden" id="register">Registrar</button>
                 </div>
             </div>
         </div>
@@ -305,4 +318,5 @@
         });
     </script>
 </body>
+
 </html>
