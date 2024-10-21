@@ -148,6 +148,10 @@
             color: #0056b3;
             font-size: 40px;
         }
+        .fundo_card {
+            background-color: #c5c5c5;
+            
+        }
     </style>
 
     <div id="video-background">
@@ -165,7 +169,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white fundo_card overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="job-search-container">
                     <h1><strong>Seu novo emprego! 👨‍💻</strong></h1>
                     <p>Mais de 376.800 vagas atuais em 1.240 sites disponíveis para você. Encontre seu novo emprego
